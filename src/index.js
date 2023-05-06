@@ -1,11 +1,28 @@
-import Tree from "./tree";
+import {Tree, createArray} from "./tree";
 
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-
-// tree.delete(4);
+let tree = new Tree(createArray(10));
 
 tree.prettyPrint();
 
-console.log(tree.find(7));
+console.log(tree.isBalanced());
+console.log(tree.levelOrder());
+console.log(tree.preOrder());
+console.log(tree.postOrder());
+console.log(tree.inOrder());
 
-tree.postOrder(console.log);
+tree.insert(200);
+tree.insert(300);
+tree.insert(400);
+
+tree.prettyPrint();
+
+console.log(tree.isBalanced());
+
+tree = tree.rebalance();
+
+tree.prettyPrint();
+console.log(tree.isBalanced());
+console.log(tree.levelOrder());
+console.log(tree.preOrder());
+console.log(tree.postOrder());
+console.log(tree.inOrder());

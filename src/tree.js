@@ -1,6 +1,6 @@
 import Node from "./node"
 
-export default class Tree {
+export class Tree {
     constructor(array) {
         this.sortedArray = [...new Set(array)].sort((a, b) => a - b);
         this.root = this.buildTree(this.sortedArray);
@@ -146,6 +146,36 @@ export default class Tree {
       }
     }
 
+    height(root = this.root) {
+      if (root === null) return -1;
+      const leftHeight = this.height(root.left);
+      const rightHeight = this.height(root.right);
+      return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    depth(node, root = this.root, d = 0) {
+      if (node === null) return 0;
+
+      if (node.data === root.data) return d;
+      if (root.data < node.data) {
+        return this.depth(node, root.right, d + 1)
+      }
+      return this.depth(node, root.left, d + 1);
+     }
+
+     isBalanced(root = this.root) {
+      const l = this.height(root.left);
+      const r = this.height(root.right);
+      if (Math.abs(l - r) > 1) return false;
+      return true;
+     }
+
+     rebalance() {
+      const newArray = this.inOrder();
+      return new Tree(newArray);
+     }
+  
+
     prettyPrint(node = this.root, prefix = "", isLeft = true) {
         if (node.right) {
           this.prettyPrint(node.right, `${prefix}${isLeft ? "|   " : "    "}`, false);
@@ -154,8 +184,18 @@ export default class Tree {
         if (node.left) {
           this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "|   "}`, true);
         }
-      }
+      }   
     }
+    
+export function createArray(value) {
+    const array = [];
+    let i;
+    for (i = 0; i < value; i++) {
+      const num = Math.floor(Math.random() * 9000);
+      array.push(num);
+    }
+    return array;
+  }
 
   
     function min(root) {
